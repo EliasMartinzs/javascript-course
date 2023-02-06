@@ -60,3 +60,71 @@ const inputTransferAmount = document.querySelector('.form__input--amount');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
+
+const displayMovements = function (movements) {
+  containerMovements.innerHTML = '';
+
+  movements.forEach(function (mov, i) {
+    const type = mov > 0 ? 'deposited' : 'withdraw';
+
+    const html = `
+   <div class="movements__row">
+    <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
+     <div class="movements__value">${mov}€</div>
+ </div>
+   `;
+
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+  });
+};
+displayMovements(account1.movements);
+
+// Lectures methods arrays , replace , join , slice , splice etc
+
+/*
+// Method forEach
+// looping in array with for of
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+console.log('For Of -------------------');
+for (const mov of movements) {
+  if (mov > 0) {
+    console.log(`you deposited ${mov}`);
+  } else {
+    console.log(`you withdraw ${Math.abs(mov)}`);
+  }
+}
+console.log('ForEach -------------------');
+// looping in array with ForEach
+movements.forEach((move, i) => {
+  if (move > 0) {
+    console.log(`movements ${i + 1} ,you deposited ${move}`);
+  } else {
+    console.log(`movements ${i + 1} ,you withdraw ${Math.abs(move)}`);
+  }
+});
+
+// Method Map
+const currencies = new Map([
+  ['USD', 'United States'],
+  ['EUR', 'Europe'],
+  ['REAL', 'Brazil'],
+]);
+
+currencies.forEach((value, key, map) => {
+  console.log(`${key} : ${value}`);
+});
+
+// Method Set
+const currenciesUnique = new Set([
+  'eur',
+  'dolar',
+  'bgp',
+  'eur',
+  'dolar',
+  'bgp',
+]);
+
+currenciesUnique.forEach((value, _, map) => {
+  console.log(`${value} : ${value}`);
+});
+*/
