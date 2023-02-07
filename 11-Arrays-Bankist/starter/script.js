@@ -85,6 +85,27 @@ const calcDisplayBalance = function (movements) {
 };
 calcDisplayBalance(account1.movements);
 
+const calcDisplaySummary = function (movements) {
+  const income = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, cur) => acc + cur, 0);
+  labelSumIn.textContent = `${income}EUR`;
+
+  const out = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, cur) => acc + cur, 0);
+  labelSumOut.textContent = `${Math.abs(out)}Eur`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * 1.2) / 100)
+    .filter(int => int >= 1)
+    .reduce((acc, cur) => acc + cur, 0);
+  labelSumInterest.textContent = `${interest}`;
+};
+
+calcDisplaySummary(account1.movements);
+
 const createUserNames = function (accs) {
   accs.forEach(acc => {
     acc.username = acc.owner
@@ -210,3 +231,7 @@ const totalDeposit = movements
   .reduce((acc, cur) => acc + cur, 0);
 console.log(totalDeposit);
 */
+
+// Method Find
+const firstWithDrawa = movements.find(mov => mov < 0);
+console.log(firstWithDrawa);
