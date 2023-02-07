@@ -65,7 +65,7 @@ const displayMovements = function (movements) {
   containerMovements.innerHTML = '';
 
   movements.forEach(function (mov, i) {
-    const type = mov > 0 ? 'deposited' : 'withdraw';
+    const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
    <div class="movements__row">
@@ -79,7 +79,38 @@ const displayMovements = function (movements) {
 };
 displayMovements(account1.movements);
 
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, cur) => acc + cur, 0);
+  labelBalance.textContent = `${balance} EUR`;
+};
+calcDisplayBalance(account1.movements);
+
+const createUserNames = function (accs) {
+  accs.forEach(acc => {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+createUserNames(accounts);
+
+// const createUserNames = function (accs) {
+//   accs.forEach(function (acc) {
+//     acc.username = acc.owner
+//       .toLowerCase()
+//       .split(' ')
+//       .map(name => name[0])
+//       .join('');
+//   });
+// };
+
+// createUserNames(accounts);
+// console.log(accounts);
 // Lectures methods arrays , replace , join , slice , splice etc
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /*
 // Method forEach
@@ -127,4 +158,55 @@ const currenciesUnique = new Set([
 currenciesUnique.forEach((value, _, map) => {
   console.log(`${value} : ${value}`);
 });
+*/
+
+// Data Transformation Arrays : Map , Reduce , Filter
+/*
+// Method Map
+
+const eurToUSd = 1.1;
+const movementsUsd = movements.map(mov => mov * eurToUSd);
+
+console.log(movementsUsd);
+
+const movementsDescritions = movements.map((mov , i ,arr) => 
+  `Movement ${i + 1} You: ${mov > 0 ? 'deposit' : 'withdrawal'}`
+)
+console.log(movementsDescritions)
+
+
+// Method Filter
+
+const deposit = movements.filter(mov => mov > 0);
+console.log(deposit);
+
+const depositFor = [];
+for (const mov of movements) if (mov > 0) depositFor.push(mov);
+console.log(depositFor);
+
+
+// Method Reduce
+const balance = movements.reduce((acc, cur) => acc + cur, 0);
+console.log(balance);
+ 
+let balancePlus = 0;
+for (const mov of movements) balancePlus += mov;
+console.log(balancePlus);
+
+
+// Maximun Value with Reduce
+const max = movements.reduce((acc, cur) => {
+  if (acc > cur) return acc;
+  else return cur;
+}, movements[0]);
+console.log(max);
+
+
+// Map, Reduce, Filter
+const eurToUsd = 1.1;
+const totalDeposit = movements
+  .filter(mov => mov > 0)
+  .map(mov => mov * eurToUsd)
+  .reduce((acc, cur) => acc + cur, 0);
+console.log(totalDeposit);
 */
