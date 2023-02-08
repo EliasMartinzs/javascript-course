@@ -152,7 +152,7 @@ btnTransfer.addEventListener('click', function (e) {
   const receiverAcc = accounts.find(
     acc => acc.username === inputTransferTo.value
   );
-    inputTransferAmount.value = inputTransferTo.value = ''
+  inputTransferAmount.value = inputTransferTo.value = '';
   if (
     amount > 0 &&
     receiverAcc &&
@@ -164,8 +164,40 @@ btnTransfer.addEventListener('click', function (e) {
     receiverAcc.movements.push(amount);
 
     // Update Ui
-    updateUi(currentAccount)
+    updateUi(currentAccount);
   }
+});
+
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    // Add movement
+    currentAccount.movements.push(amount);
+    // Update Ui
+    updateUi(currentAccount);
+  }
+});
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    const index = accounts.find(
+      acc => acc.username === currentAccount.username
+    );
+
+    // Delete Account
+    accounts.splice(index, 1);
+    // Hide UI
+    containerApp.style.opacity = 0;
+  }
+  inputCloseUsername.value = inputClosePin.value = '';
 });
 
 // Lectures methods arrays , replace , join , slice , splice etc
@@ -274,4 +306,38 @@ console.log(totalDeposit);
 // Method Find
 const person = accounts.find(acc => acc.owner === 'Jessica Davis');
 console.log(person);
+
+
+// Method Includes
+// Equality
+console.log(movements.includes(-130));
+
+// Method Some
+// Condition
+const anyDeposits = movements.some(mov => mov > 0);
+console.log(anyDeposits);
 */
+
+// Method Every
+console.log(movements.every(mov => mov > 0));
+console.log(account4.movements.every(mov => mov > 0));
+
+// Separate callback
+const deposit = mov => mov > 0;
+console.log(movements.some(deposit));
+console.log(movements.filter(deposit));
+console.log(movements.every(deposit));
+
+// Method Flat
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+
+const arrDeep = [3, [2, [3]], [4, 5, 6, [4]]];
+console.log(arrDeep.flat(2));
+
+// Method Flat
+const newAllMovements = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, cur) => acc + cur);
+console.log(newAllMovements);
