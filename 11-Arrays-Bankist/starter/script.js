@@ -84,9 +84,9 @@ const calcDisplayBalance = function (acc) {
 };
 
 const calcDisplaySummary = function (acc) {
-  const incomeOut = acc.movements.reduce(
+  const { income, out } = acc.movements.reduce(
     (accm, curr) => {
-      curr > 0 ? (accm.income += curr) : (accm.out += curr);
+      accm[curr > 0 ? 'income' : 'out'] += curr;
       return accm;
     },
     {
@@ -94,8 +94,8 @@ const calcDisplaySummary = function (acc) {
       out: 0,
     }
   );
-  labelSumIn.textContent = `${incomeOut.income}EUR`;
-  labelSumOut.textContent = `${Math.abs(incomeOut.out)}EUR`;
+  labelSumIn.textContent = `${income}EUR`;
+  labelSumOut.textContent = `${Math.abs(out)}EUR`;
 
   const interest = acc.movements
     .filter(mov => mov > 0)
@@ -331,6 +331,9 @@ console.log(movements.some(deposit));
 console.log(movements.filter(deposit));
 console.log(movements.every(deposit));
 
+  );
+  labelSumIn.textContent = `${incomeOut.income}EUR`;
+  labelSumOut.textContent = `${Math.abs(incomeOut.out)}EUR`;
 // Method Flat
 const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
 console.log(arr.flat());
@@ -419,7 +422,8 @@ const bankNew1000 = accounts
   .reduce((count, cur) => (cur >= 1000 ? ++count : count), 0);
 console.log(bankNew1000);
 
-const depositAndWithdrawal = accounts
+
+const { deposit, withdrawal } = accounts
   .flatMap(acc => acc.movements)
   .reduce(
     (accm, el) => {
@@ -431,5 +435,19 @@ const depositAndWithdrawal = accounts
       withdrawal: 0,
     }
   );
-console.log(depositAndWithdrawal);
+// console.log(deposit);
+
+const { depositNew, withdrawalNew } = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (accm, curr) => {
+      accm[curr > 0 ? 'depositNew' : 'withdrawalNew'] += curr;
+      return accm;
+    },
+    {
+      depositNew: 0,
+      withdrawalNew: 0,
+    }
+  );
+console.log(depositNew, withdrawalNew);
 */
