@@ -84,22 +84,25 @@ const calcDisplayBalance = function (acc) {
 };
 
 const calcDisplaySummary = function (acc) {
-  const income = acc.movements
-    .filter(mov => mov > 0)
-    .reduce((acc, cur) => acc + cur, 0);
-  labelSumIn.textContent = `${income}EUR`;
-
-  const out = acc.movements
-    .filter(mov => mov < 0)
-    .reduce((acc, cur) => acc + cur, 0);
-  labelSumOut.textContent = `${Math.abs(out)}Eur`;
+  const incomeOut = acc.movements.reduce(
+    (accm, curr) => {
+      curr > 0 ? (accm.income += curr) : (accm.out += curr);
+      return accm;
+    },
+    {
+      income: 0,
+      out: 0,
+    }
+  );
+  labelSumIn.textContent = `${incomeOut.income}EUR`;
+  labelSumOut.textContent = `${Math.abs(incomeOut.out)}EUR`;
 
   const interest = acc.movements
     .filter(mov => mov > 0)
     .map(deposit => (deposit * acc.interestRate) / 100)
     .filter(int => int >= 1)
-    .reduce((acc, cur) => acc + cur, 0);
-  labelSumInterest.textContent = `${interest}`;
+    .reduce((accm, curr) => accm + curr);
+  labelSumInterest.textContent = `${interest}EUR`;
 };
 
 const createUserNames = function (accs) {
@@ -363,4 +366,70 @@ movements.sort((a, b) => {
   if (a > b) return -1;
   if (b > a) return 1;
 });
+
+
+const arr = [1, 2, 3, 4, 5, 6, 7];
+console.log(new Array(1, 2, 3, 4, 5, 6, 7));
+
+// Empty arrays with fill method
+const x = new Array(7);
+console.log(x);
+
+// console.log(x.map(() => 5))
+// x.fill(1)
+// console.log(x.fill(1))
+console.log(x.fill(1, 4, 6));
+
+arr.fill(23, 4, 6);
+console.log(arr);
+
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y);
+
+const z = Array.from({ length: 70 }, (_, i) => i + 1);
+console.log(z);
+
+
+// Array method practice(
+const bankDeposit = accounts
+  .flatMap(el => el.movements)
+  .filter(mov => mov > 0)
+  .reduce((acc, elm) => acc + elm, 0);
+console.log(bankDeposit);
+
+const newUserNameBank = function (accs) {
+  accs.forEach(acc => {
+    acc.abc = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+console.log(accounts);
+newUserNameBank(accounts);
+
+const bank1000 = accounts
+  .flatMap(acc => acc.movements)
+  .filter(acc => acc >= 1000).length;
+console.log(bank1000);
+
+const bankNew1000 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((count, cur) => (cur >= 1000 ? ++count : count), 0);
+console.log(bankNew1000);
+
+const depositAndWithdrawal = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (accm, el) => {
+      el > 0 ? (accm.deposit += el) : (accm.withdrawal += el);
+      return accm;
+    },
+    {
+      deposit: 0,
+      withdrawal: 0,
+    }
+  );
+console.log(depositAndWithdrawal);
 */
