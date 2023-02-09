@@ -280,7 +280,7 @@ console.log(depositFor);
 // Method Reduce
 const balance = movements.reduce((acc, cur) => acc + cur, 0);
 console.log(balance);
- 
+
 let balancePlus = 0;
 for (const mov of movements) balancePlus += mov;
 console.log(balancePlus);
@@ -316,7 +316,7 @@ console.log(movements.includes(-130));
 // Condition
 const anyDeposits = movements.some(mov => mov > 0);
 console.log(anyDeposits);
-*/
+
 
 // Method Every
 console.log(movements.every(mov => mov > 0));
@@ -341,3 +341,26 @@ const newAllMovements = accounts
   .flat()
   .reduce((acc, cur) => acc + cur);
 console.log(newAllMovements);
+
+
+// Method Sort
+// Use method sort with only numbers
+const owener = ['jack', 'elias', 'jonas', 'elena'];
+console.log(owener.sort());
+
+// Return < 0, a ,b (Keep Order)
+// Return > 0 ,b, a (Switch Order)
+
+movements.sort((a, b) => a - b);
+console.log(movements);
+// Ascending
+movements.sort((a, b) => {
+  if (a > b) return 1;
+  if (b > a) return -1;
+});
+// Descending
+movements.sort((a, b) => {
+  if (a > b) return -1;
+  if (b > a) return 1;
+});
+*/
