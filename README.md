@@ -72,3 +72,6 @@ There is also a the [updates-and-fixes](https://github.com/jonasschmedtmann/comp
 
 **A:** They are in this same repo, but in the [v1 branch](https://github.com/jonasschmedtmann/complete-javascript-course/tree/v1). So just go to [v1](https://github.com/jonasschmedtmann/complete-javascript-course/tree/v1), and download the code from there.
 # Java-script-course
+
+
+
